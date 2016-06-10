@@ -40,6 +40,8 @@ import java.util.ArrayList;
 @Path("home")
 public class GenericResource {
     
+    PrinterStatus ps = new PrinterStatus();
+    
     public GenericResource() {
     }
 
@@ -48,7 +50,15 @@ public class GenericResource {
     public String Test(){
         return "5:31 pm";
     }
- 
+    
+    @GET
+    @Path("printerStatus")
+    @Produces(MediaType.TEXT_PLAIN) //MediaType.APPLICATION_XML
+    public String PrinterStatus(){
+        ps.PrinterStatus();
+        return "printerStatus";
+    }
+    
 }
     
     

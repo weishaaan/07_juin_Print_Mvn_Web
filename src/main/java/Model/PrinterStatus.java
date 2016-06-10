@@ -21,11 +21,11 @@ import javax.print.attribute.HashPrintServiceAttributeSet;
 import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.ColorSupported;
 import javax.print.attribute.standard.*;
-import de.lohndirekt.print.*;
+//import de.lohndirekt.print.*;
 
 public class PrinterStatus {
     
-    public PrinterStatus(){
+    public void PrinterStatus(){
         // locate print services capable of printing the specified DocFlavor and attributes
         // with null no constraints are used
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);

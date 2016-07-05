@@ -1,0 +1,14 @@
+Model/Label.class
+Model/Printer.class
+Model/LabelType.class
+Model/PrinterStatus.class
+Model/PrintJob.class
+Model/test1.class
+Model/test.class
+Model/CORSFilter.class
+Model/ApplicationConfig.class
+Model/LabelFormat.class
+Model/GenericResource.class
+Model/Field.class
+Model/PrinterStatusLPR.class
+Model/Config.class

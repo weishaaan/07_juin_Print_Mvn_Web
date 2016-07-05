@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public class GenericResource {
     
     PrinterStatus ps = new PrinterStatus();
-    
+ 
     public GenericResource() {
     }
 
@@ -58,7 +58,20 @@ public class GenericResource {
         ps.PrinterStatus();
         return "printerStatus";
     }
-    
+   
+    @GET
+    @Path("/getOfList")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Of getRecord() {
+
+        Of ofclass = new Of();
+        ofclass.setOfNum(1122L);
+        ofclass.setReference(1122L);
+        ofclass.setSreference("adaa");
+
+        return ofclass;
+    }
+
 }
     
     

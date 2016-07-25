@@ -30,13 +30,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.xml.bind.JAXBException;
-import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
-import org.apache.xmlbeans.XmlException;
-import org.eclipse.jetty.server.Request;
-import static org.glassfish.jersey.server.model.Parameter.Source.PATH;
 import java.util.ArrayList;
-import java.util.Map;
 
 @Path("home")
 public class GenericResource {
@@ -62,7 +56,7 @@ public class GenericResource {
     }
    
     @GET
-    @Path("/getOfList")
+    @Path("getOfList")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Of> getOfList() {
         
@@ -96,7 +90,7 @@ public class GenericResource {
     }
     
     @GET
-    @Path("/getPrinterList")
+    @Path("getPrinterList")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<PrinterDatabase> getPrinterList() {
         

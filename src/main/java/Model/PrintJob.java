@@ -1,5 +1,8 @@
 package Model;
 
+import Label.Label;
+import Printer_Marshall.Printer;
+
 public class PrintJob extends PostPrintInfo{   
     Label label;
     Printer printer;

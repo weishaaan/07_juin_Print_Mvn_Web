@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F1adfasfasas</CODE>
+            <DESCRIPTION>Le champ F1 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO1</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F2</CODE>
+            <DESCRIPTION>Le champ F2 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO2</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F3</CODE>
+            <DESCRIPTION>Le champ F3 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO3</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F4</CODE>
+            <DESCRIPTION>Le champ F4 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO4</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F5</CODE>
+            <DESCRIPTION>Le champ F5 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO5</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    <LABELTYPE>
+        <FIELD>
+            <CODE>F6</CODE>
+            <DESCRIPTION>Le champ F6 sert à ... </DESCRIPTION>
+            <TYPE>String</TYPE>
+            <X>200</X>
+            <Y>300</Y>
+            <VALUE>Num BL</VALUE>
+            <CALCULATED>O</CALCULATED>
+            <SOURCE>Divalto mouvement BLNO6</SOURCE>
+        </FIELD>
+    </LABELTYPE>
+    
+    
+</CATALOG>

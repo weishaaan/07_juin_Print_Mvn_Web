@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+    
+    <PRINTER>
+        <DPI>dpi1</DPI>
+        <IP>192.168.1.1</IP>
+        <PORT>1111</PORT>
+        <NAME>printer1</NAME>
+        <TYPE>type1</TYPE>
+        <STATUS>true</STATUS>
+    </PRINTER>
+
+    <PRINTER>
+        <DPI>dpi2</DPI>
+        <IP>192.168.2.2</IP>
+        <PORT>2222</PORT>
+        <NAME>printer2</NAME>
+        <TYPE>type2</TYPE>
+        <STATUS>false</STATUS>
+    </PRINTER>
+    
+    <PRINTER>
+        <DPI>dpi3</DPI>
+        <IP>192.168.3.3</IP>
+        <PORT>3333</PORT>
+        <NAME>printer3</NAME>
+        <TYPE>type3</TYPE>
+        <STATUS>true</STATUS>
+    </PRINTER>
+    
+    <PRINTER>
+        <DPI>dpi4</DPI>
+        <IP>192.168.4.4</IP>
+        <PORT>4444</PORT>
+        <NAME>printer4</NAME>
+        <TYPE>type4</TYPE>
+        <STATUS>false</STATUS>
+    </PRINTER>
+    
+    <PRINTER>
+        <DPI>dpi5</DPI>
+        <IP>192.168.5.5</IP>
+        <PORT>5555</PORT>
+        <NAME>printer5</NAME>
+        <TYPE>type5</TYPE>
+        <STATUS>true</STATUS>
+    </PRINTER>
+
+</CATALOG>

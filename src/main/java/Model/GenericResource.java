@@ -1,5 +1,9 @@
 package Model;
 
+import Label_Type_Marshall.LabelType;
+import Label_Type_Marshall.LabelTypeDatabase;
+import Printer_Marshall.PrinterDatabase;
+import Printer_Marshall.Printer;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,6 +41,8 @@ public class GenericResource {
     
     PrinterStatus printStatus = new PrinterStatus();
     PrintJob printjob = new PrintJob();
+    PrinterDatabase printerDatabase = new PrinterDatabase();
+    LabelTypeDatabase labelTypeDatabase = new LabelTypeDatabase();
     
     public GenericResource() {
     }
@@ -89,6 +95,7 @@ public class GenericResource {
         return list;
     }
     
+    /*
     @GET
     @Path("getPrinterList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -110,6 +117,21 @@ public class GenericResource {
         list.add(p4);
         
         return list;
+    }
+    */
+    
+    @GET
+    @Path("getAllPrinter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Printer> getAllPrinter() throws IOException{
+        return printerDatabase.getAllPrinters();
+    }
+    
+    @GET
+    @Path("getAllLabel")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<LabelType> getAllLabel() throws IOException{
+        return labelTypeDatabase.getAllLabelTypes();
     }
     
     @POST

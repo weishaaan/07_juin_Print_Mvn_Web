@@ -6,16 +6,16 @@ class PostPrintInfo {
     int num;
     String type;
     String express;
-    String prefix;
+    String date;
     String bl;
 
-    public PostPrintInfo(long ofNum, String printerName, int num, String type, String express, String prefix, String bl) {
+    public PostPrintInfo(long ofNum, String printerName, int num, String type, String express, String date, String bl) {
         this.ofNum = ofNum;
         this.printerName = printerName;
         this.num = num;
         this.type = type;
         this.express = express;
-        this.prefix = prefix;
+        this.date = date;
         this.bl = bl;
     }
 
@@ -44,8 +44,8 @@ class PostPrintInfo {
         return express;
     }
 
-    public String getPrefix() {
-        return prefix;
+    public String getDate() {
+        return date;
     }
 
     public String getBl() {
@@ -72,8 +72,8 @@ class PostPrintInfo {
         this.express = express;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setBl(String bl) {

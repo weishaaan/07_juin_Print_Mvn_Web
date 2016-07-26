@@ -145,12 +145,12 @@ public class GenericResource {
         printjob.setNum(postPrintInfo.getNum());
         printjob.setType(postPrintInfo.getType());
         printjob.setExpress(postPrintInfo.getExpress());
-        printjob.setPrefix(postPrintInfo.getPrefix());
+        printjob.setDate(postPrintInfo.getDate());
         printjob.setBl(postPrintInfo.getBl());
         
         System.out.println("Successfully $POST params to web service!");
         
-        return  "result:"+printjob.getBl()+printjob.getExpress()+printjob.getPrefix()+printjob.getPrinterName()+printjob.getType(); 
+        return  "result:"+printjob.getBl()+printjob.getExpress()+printjob.getDate()+printjob.getPrinterName()+printjob.getType(); 
     }
     
     

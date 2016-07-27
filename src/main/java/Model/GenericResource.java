@@ -128,7 +128,7 @@ public class GenericResource {
     }
     
     @GET
-    @Path("getAllLabel")
+    @Path("getLabelTypes")
     @Produces(MediaType.APPLICATION_JSON)
     public List<LabelType> getAllLabel() throws IOException{
         return labelTypeDatabase.getAllLabelTypes();

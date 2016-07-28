@@ -11,7 +11,26 @@ public class Of {
     long ofNum;
     long reference;
     String sreference;
+    String artDesignation;
+    String nbArtPerContainer;
 
+    public void setArtDesignation(String artDesignation) {
+        this.artDesignation = artDesignation;
+    }
+
+    public void setNbArtPerContainer(String nbArtPerContainer) {
+        this.nbArtPerContainer = nbArtPerContainer;
+    }
+
+    public String getArtDesignation() {
+        return artDesignation;
+    }
+
+    public String getNbArtPerContainer() {
+        return nbArtPerContainer;
+    }
+    
+    
     public void setOfNum(long ofNum) {
         this.ofNum = ofNum;
     }

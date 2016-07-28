@@ -51,24 +51,34 @@ public class GenericResource {
         ofclass1.setOfNum(1L);
         ofclass1.setReference(1L);
         ofclass1.setSreference("a1");
+        ofclass1.setArtDesignation("ArtDesignation");
+        ofclass1.setNbArtPerContainer("NbArtPerContainer");
+        
         list.add(ofclass1);
         
         Of ofclass2 = new Of();
         ofclass2.setOfNum(2L);
         ofclass2.setReference(2L);
         ofclass2.setSreference("a2");
+        ofclass2.setArtDesignation("ArtDesignation");
+        ofclass2.setNbArtPerContainer("NbArtPerContainer");
+        
         list.add(ofclass2);
         
         Of ofclass3 = new Of();
         ofclass3.setOfNum(3L);
         ofclass3.setReference(3L);
         ofclass3.setSreference("a3");
+        ofclass3.setArtDesignation("ArtDesignation");
+        ofclass3.setNbArtPerContainer("NbArtPerContainer");
         list.add(ofclass3);
         
         Of ofclass4 = new Of();
         ofclass4.setOfNum(4L);
         ofclass4.setReference(4L);
         ofclass4.setSreference("a4");
+        ofclass4.setArtDesignation("ArtDesignation");
+        ofclass4.setNbArtPerContainer("NbArtPerContainer");
         list.add(ofclass4);
         
         return list;

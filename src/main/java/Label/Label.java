@@ -1,6 +1,6 @@
 package Label;
 
-import Label_Type_Marshall.LabelType;
+import LabelType.*;
 
 public class Label {
     
@@ -16,6 +16,9 @@ public class Label {
         this.lastPrintTime = lastPrintTime;
         this.labelFormat = labelFormat;
         this.labelType = labelType;
+    }
+
+    public Label() {
     }
     
     

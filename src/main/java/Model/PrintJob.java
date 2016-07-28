@@ -3,13 +3,12 @@ package Model;
 import Label.Label;
 import Printer_Marshall.Printer;
 
-public class PrintJob extends PostPrintInfo{   
+public class PrintJob {   
     Label label;
     Printer printer;
     Config config;
     
     public PrintJob(Label label,Printer printer, Config config) {
-        super();
         this.label = label;
         this.printer = printer;
         this.config = config;
@@ -22,19 +21,6 @@ public class PrintJob extends PostPrintInfo{
     public void print(){
         // print(ofnum, nbre, labelCode, printer): type
     
-    }
-   
-    
-    public int getEtiquetteNbre(){
-        return super.num;
-    }
-    
-    public String getEtiquetteTypes(){
-        return super.type;
-    }
-    
-    public String getPrinters(){
-        return super.printerName;
     }
     
     public void save(){

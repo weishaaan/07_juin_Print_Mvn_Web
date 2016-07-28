@@ -2,16 +2,16 @@ package Model;
 
 class PostPrintInfo {
     long ofNum;
-    String printerName;
+    String ip;
     int num;
     String type;
     String express;
     String date;
     String bl;
 
-    public PostPrintInfo(long ofNum, String printerName, int num, String type, String express, String date, String bl) {
+    public PostPrintInfo(long ofNum, String ip, int num, String type, String express, String date, String bl) {
         this.ofNum = ofNum;
-        this.printerName = printerName;
+        this.ip = ip;
         this.num = num;
         this.type = type;
         this.express = express;
@@ -28,8 +28,8 @@ class PostPrintInfo {
         return ofNum;
     }
 
-    public String getPrinterName() {
-        return printerName;
+    public String getIp() {
+        return ip;
     }
 
     public int getNum() {
@@ -56,8 +56,8 @@ class PostPrintInfo {
         this.ofNum = ofNum;
     }
 
-    public void setPrinterName(String printerName) {
-        this.printerName = printerName;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public void setNum(int num) {

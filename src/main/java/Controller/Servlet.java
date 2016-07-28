@@ -1,6 +1,6 @@
 package Controller;
 
-import Label_Type_Marshall.LabelTypeConfig;
+import LabelType.LabelTypeConfig;
 import Printer_Marshall.PrinterConfig;
 import java.io.IOException;
 import java.util.logging.Level;

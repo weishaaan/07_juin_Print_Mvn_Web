@@ -1,39 +1,18 @@
 package Model;
 
-import Label_Type_Marshall.LabelType;
-import Label_Type_Marshall.LabelTypeDatabase;
+import LabelType.LabelType;
+import LabelType.LabelTypeDatabase;
+import LabelType.LabelTypeGet;
 import Printer_Marshall.PrinterDatabase;
 import Printer_Marshall.Printer;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import javax.activation.MimetypesFileTypeMap;
-import javax.imageio.ImageIO;
-import javax.management.monitor.Monitor;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.PUT;
-import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
-import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
-import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 
 @Path("home")
@@ -95,30 +74,6 @@ public class GenericResource {
         return list;
     }
     
-    /*
-    @GET
-    @Path("getPrinterList")
-    @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<PrinterDatabase> getPrinterList() {
-        
-        ArrayList<PrinterDatabase> list = new ArrayList<PrinterDatabase>();
-        
-        PrinterDatabase p1 = new PrinterDatabase();
-        p1.setPrinterName("printer1");
-        list.add(p1);
-        PrinterDatabase p2 = new PrinterDatabase();
-        p2.setPrinterName("printer2");
-        list.add(p2);
-        PrinterDatabase p3 = new PrinterDatabase();
-        p3.setPrinterName("printer3");
-        list.add(p3);
-        PrinterDatabase p4 = new PrinterDatabase();
-        p4.setPrinterName("printer4");
-        list.add(p4);
-        
-        return list;
-    }
-    */
     
     @GET
     @Path("getAllPrinter")
@@ -130,9 +85,21 @@ public class GenericResource {
     @GET
     @Path("getLabelTypes")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<LabelType> getAllLabel() throws IOException{
-        return labelTypeDatabase.getAllLabelTypes();
+    public List<LabelTypeGet> getAllLabel() throws IOException{
+            
+        List<LabelTypeGet> l = new ArrayList<LabelTypeGet>();
+        for(int i = 0 ; i < labelTypeDatabase.getAllLabelTypes().size() ; i++){
+            LabelTypeGet ltg = new LabelTypeGet();
+            ltg.setReference(labelTypeDatabase.getAllLabelTypes().get(i).getReference());
+            ltg.setS(labelTypeDatabase.getAllLabelTypes().get(i).toString());
+            
+            l.add(ltg);
+        }
+        
+        return l;
     }
+    //reference toString getReference()+" - "+ getLabelName();
+    
     
     @POST
     @Path("postPrintMessage")
@@ -140,21 +107,23 @@ public class GenericResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String postNameRunBat(PostPrintInfo postPrintInfo){  
         
+        /*
         printjob.setOfNum(postPrintInfo.getOfNum());
-        printjob.setPrinterName(postPrintInfo.getPrinterName());
+        printjob.setIp(postPrintInfo.getIp());
         printjob.setNum(postPrintInfo.getNum());
         printjob.setType(postPrintInfo.getType());
         printjob.setExpress(postPrintInfo.getExpress());
         printjob.setDate(postPrintInfo.getDate());
         printjob.setBl(postPrintInfo.getBl());
+        */
         
         System.out.println("Successfully $POST params to web service!");
         
-        return  "result:"+printjob.getBl()+printjob.getExpress()+printjob.getDate()+printjob.getPrinterName()+printjob.getType(); 
+        return  "result ";
+          //printjob.getOfNum()+printjob.getBl()+printjob.getExpress()+printjob.getDate()+printjob.getIp()+printjob.getType(); 
     }
     
-    
-    
+        
     
     
     

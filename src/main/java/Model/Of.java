@@ -11,6 +11,8 @@ public class Of {
     long ofNum;
     long reference;
     String sreference;
+    
+    
     String artDesignation;
     String nbArtPerContainer;
 

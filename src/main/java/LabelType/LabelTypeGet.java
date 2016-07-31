@@ -1,14 +1,19 @@
 package LabelType;
 
+import java.util.List;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(propOrder = {"labelName", "reference", "listField"})
 public class LabelTypeGet {
     String reference;
-    String s;
+    String labelName;
+    List<Field> listField;
     
     
-    public LabelTypeGet(String reference, String s) {
+    public LabelTypeGet(String reference, String labelName, List<Field> listField) {
         this.reference = reference;
-        this.s = s;
+        this.labelName = labelName;
+        this.listField = listField;
     }
 
     public LabelTypeGet() {
@@ -18,16 +23,24 @@ public class LabelTypeGet {
         return reference;
     }
 
-    public String getS() {
-        return s;
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public List<Field> getListField() {
+        return listField;
+    }
+
+    public void setListField(List<Field> listField) {
+        this.listField = listField;
     }
 
     public void setReference(String reference) {
         this.reference = reference;
     }
 
-    public void setS(String s) {
-        this.s = s;
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
     }
     
     

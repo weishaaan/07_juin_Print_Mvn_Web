@@ -48,8 +48,8 @@ public class GenericResource {
         ArrayList<Of> list = new ArrayList<Of>();
 
         Of ofclass1 = new Of();
-        ofclass1.setOfNum(1L);
-        ofclass1.setReference(1L);
+        ofclass1.setOfNum(1);
+        ofclass1.setReference(1);
         ofclass1.setSreference("a1");
         ofclass1.setArtDesignation("ArtDesignation");
         ofclass1.setNbArtPerContainer("NbArtPerContainer");
@@ -57,8 +57,8 @@ public class GenericResource {
         list.add(ofclass1);
         
         Of ofclass2 = new Of();
-        ofclass2.setOfNum(2L);
-        ofclass2.setReference(2L);
+        ofclass2.setOfNum(2);
+        ofclass2.setReference(2);
         ofclass2.setSreference("a2");
         ofclass2.setArtDesignation("ArtDesignation");
         ofclass2.setNbArtPerContainer("NbArtPerContainer");
@@ -66,16 +66,16 @@ public class GenericResource {
         list.add(ofclass2);
         
         Of ofclass3 = new Of();
-        ofclass3.setOfNum(3L);
-        ofclass3.setReference(3L);
+        ofclass3.setOfNum(3);
+        ofclass3.setReference(3);
         ofclass3.setSreference("a3");
         ofclass3.setArtDesignation("ArtDesignation");
         ofclass3.setNbArtPerContainer("NbArtPerContainer");
         list.add(ofclass3);
         
         Of ofclass4 = new Of();
-        ofclass4.setOfNum(4L);
-        ofclass4.setReference(4L);
+        ofclass4.setOfNum(4);
+        ofclass4.setReference(4);
         ofclass4.setSreference("a4");
         ofclass4.setArtDesignation("ArtDesignation");
         ofclass4.setNbArtPerContainer("NbArtPerContainer");
@@ -91,7 +91,7 @@ public class GenericResource {
     public List<Printer> getAllPrinter() throws IOException{
         return printerDatabase.getAllPrinters();
     }
-    
+    /*
     @GET
     @Path("getLabelTypes")
     @Produces(MediaType.APPLICATION_JSON)
@@ -109,7 +109,24 @@ public class GenericResource {
         return l;
     }
     //reference toString getReference()+" - "+ getLabelName();
+    */
     
+    @GET
+    @Path("getLabelTypes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<LabelTypeGet> getAllLabel() throws IOException{
+            
+        List<LabelTypeGet> l = new ArrayList<LabelTypeGet>();
+        for(int i = 0 ; i < labelTypeDatabase.getAllLabelTypes().size() ; i++){
+            LabelTypeGet ltg = new LabelTypeGet();
+            ltg.setReference(labelTypeDatabase.getAllLabelTypes().get(i).getReference());
+            ltg.setLabelName(labelTypeDatabase.getAllLabelTypes().get(i).toString());
+            ltg.setListField(labelTypeDatabase.getAllLabelTypes().get(i).getFields().getFields());
+            l.add(ltg);
+        }
+        
+        return l;
+    }
     
     @POST
     @Path("postPrintMessage")

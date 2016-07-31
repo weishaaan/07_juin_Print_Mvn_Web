@@ -1,28 +1,29 @@
 package Model;
 
+import java.util.List;
+
 class PostPrintInfo {
     long ofNum;
     String ip;
     int num;
     String type;
+    List<UserInput> userInputs;
+    
+    /*
     String express;
     String date;
     String bl;
-
-    public PostPrintInfo(long ofNum, String ip, int num, String type, String express, String date, String bl) {
+*/
+    public PostPrintInfo(long ofNum, String ip, int num, String type,List<UserInput> userInputs) {
         this.ofNum = ofNum;
         this.ip = ip;
         this.num = num;
         this.type = type;
-        this.express = express;
-        this.date = date;
-        this.bl = bl;
+        this.userInputs = userInputs;
     }
-
     
     public PostPrintInfo() {
     }
-
     
     public long getOfNum() {
         return ofNum;
@@ -40,18 +41,10 @@ class PostPrintInfo {
         return type;
     }
 
-    public String getExpress() {
-        return express;
+    public List<UserInput> getUserInputs() {
+        return userInputs;
     }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getBl() {
-        return bl;
-    }
-
+    
     public void setOfNum(long ofNum) {
         this.ofNum = ofNum;
     }
@@ -67,19 +60,9 @@ class PostPrintInfo {
     public void setType(String type) {
         this.type = type;
     }
-
-    public void setExpress(String express) {
-        this.express = express;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setBl(String bl) {
-        this.bl = bl;
+    
+    public void setUserInputs(List<UserInput> userInputs) {
+        this.userInputs = userInputs;
     }
     
-    
-            
 }

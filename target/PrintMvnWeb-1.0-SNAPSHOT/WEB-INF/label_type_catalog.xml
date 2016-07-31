@@ -1,48 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
     <LABELTYPE>
-        <GENERIC>apple</GENERIC>
-        <REFERENCE>apple</REFERENCE>
-        <LABELNAME>apple name1</LABELNAME>
-        <DESCRIPTION>apple</DESCRIPTION>
+        <GENERIC>Galia Standard Motus</GENERIC>
+        <REFERENCE>MOT01</REFERENCE>
+        <LABELNAME>Galia Standard Motus</LABELNAME>
+        <DESCRIPTION>Etiquette standard Mora - Norme Galia</DESCRIPTION>
         <FORMAT>
-            <FORMATNAME>apple name1</FORMATNAME>
-            <WIDTH>100</WIDTH>
-            <LENGTH>49</LENGTH>
+            <FORMATNAME>A6</FORMATNAME>
+            <WIDTH>102</WIDTH>
+            <LENGTH>213</LENGTH>
         </FORMAT>
         <FIELDS>
             <FIELD>
-                <CODE>F1</CODE>
-                <DESCRIPTION>apple.. </DESCRIPTION>
+                <CODE>A1</CODE>
+                <DESCRIPTION>Customer Name </DESCRIPTION>
                 <TYPE>String</TYPE>
-                <X>200</X>
-                <Y>300</Y>
-                <VALUE>Num BL</VALUE>
+                <X>50</X>
+                <Y>9</Y>
+                <VALUE>MOTUS CREUTZWALD SAS</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>A2</CODE>
+                <DESCRIPTION>Customer Zipcode and City</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>50</X>
+                <Y>14</Y>
+                <VALUE>57150 CREUTZWALD</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>C1</CODE>
+                <DESCRIPTION>Delivery Note Number</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>170</X>
+                <Y>9</Y>
+                <VALUE>$BLNO$</VALUE>
                 <CALCULATED>O</CALCULATED>
-                <SOURCE>Divalto mouvement BLNO1</SOURCE>
+                <SOURCE>UserInput</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>C2</CODE>
+                <DESCRIPTION>Delivery Note Number Barcode</DESCRIPTION>
+                <TYPE>Code128</TYPE>
+                <X>150</X>
+                <Y>14</Y>
+                <VALUE>N$BLNO$</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>D1</CODE>
+                <DESCRIPTION>Customer Part Number</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>34</X>
+                <Y>20</Y>
+                <VALUE>$ReferenceCli$</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>Divalto</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>D2</CODE>
+                <DESCRIPTION>Customer Part Number Barcode</DESCRIPTION>
+                <TYPE>Code128</TYPE>
+                <X>34</X>
+                <Y>20</Y>
+                <VALUE>P$ReferenceCli$</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>Divalto</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>E1</CODE>
+                <DESCRIPTION>Pack Qty</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>35</X>
+                <Y>34</Y>
+                <VALUE>$X_NBCARTON$</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>Divalto</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>E2</CODE>
+                <DESCRIPTION>Pack Qty Barcode</DESCRIPTION>
+                <TYPE>Code128</TYPE>
+                <X>27</X>
+                <Y>42</Y>
+                <VALUE>Q$X_NBCARTON$</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>Divalto</SOURCE>
             </FIELD>
             <FIELD>
                 <CODE>F1</CODE>
-                <DESCRIPTION>Le champ F1 sert à ... </DESCRIPTION>
+                <DESCRIPTION>Supplier Name</DESCRIPTION>
                 <TYPE>String</TYPE>
-                <X>200</X>
-                <Y>300</Y>
-                <VALUE>Num BL</VALUE>
-                <CALCULATED>O</CALCULATED>
-                <SOURCE>Divalto mouvement BLNO1</SOURCE>
+                <X>125</X>
+                <Y>34</Y>
+                <VALUE>MORA PORTUGAL SOCIDADE UNIPERESSOAL LDA</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
             </FIELD>
+            <FIELD>
+                <CODE>H1</CODE>
+                <DESCRIPTION>Motus Supplier Number</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>35</X>
+                <Y>47</Y>
+                <VALUE>383959</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>H2</CODE>
+                <DESCRIPTION>Motus Supplier Number Barcode</DESCRIPTION>
+                <TYPE>Code128</TYPE>
+                <X>25</X>
+                <Y>57</Y>
+                <VALUE>V383959</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>N/A</SOURCE>
+            </FIELD>                       
+            <FIELD>
+                <CODE>I1</CODE>
+                <DESCRIPTION>Delivery Date</DESCRIPTION>
+                <TYPE>Code128</TYPE>
+                <X>125</X>
+                <Y>57</Y>
+                <VALUE>16/07/22</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>UserInput</SOURCE>
+            </FIELD>                                                    
+                                                                        
+                                                                                                                        
         </FIELDS>    
     </LABELTYPE>
     
     <LABELTYPE>
-        <GENERIC>banana</GENERIC>
-        <REFERENCE>banana</REFERENCE>
-        <LABELNAME>banana name1</LABELNAME>
-        <DESCRIPTION>banana</DESCRIPTION>
+        <GENERIC>Galia Mora STD</GENERIC>
+        <REFERENCE>GALIASTD</REFERENCE>
+        <LABELNAME>Galia Standard Mora</LABELNAME>
+        <DESCRIPTION>Etiquette Standard Mora - Norme Galia</DESCRIPTION>
         <FORMAT>
-            <FORMATNAME>banana name1</FORMATNAME>
-            <WIDTH>100</WIDTH>
-            <LENGTH>49</LENGTH>
+            <FORMATNAME>A6</FORMATNAME>
+            <WIDTH>102</WIDTH>
+            <LENGTH>213</LENGTH>
         </FORMAT>
         <FIELDS>
             <FIELD>
@@ -75,6 +177,16 @@
                 <CALCULATED>O</CALCULATED>
                 <SOURCE>Divalto mouvement BLNO1</SOURCE>
             </FIELD>
+            <FIELD>
+                <CODE>Z1</CODE>
+                <DESCRIPTION>Zone utilisateur pour mention spécifique</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X>125</X>
+                <Y>57</Y>
+                <VALUE>Zone utiliateur</VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>UserInput</SOURCE>
+            </FIELD>              
         </FIELDS>    
     </LABELTYPE>
     

@@ -222,30 +222,56 @@ public class GenericResource {
         System.out.println("******************* label number is: " + printjob.getLabel().getLabelNumber() + " *******************");
         System.out.println("******************* label reference is :" + printjob.getLabel().getLabelType().getReference() + "*******************");
         
+        Boolean b = false;
+        String numOf = null;
+        String indiceClient = null;
+        String numOf_old = "$NUMOF$";
+        String indiceClient_old = "$INDICECLIENT$";
+        
         for (int m = 0; m < printjob.getLabel().getLabelType().getFields().getFields().size(); m++) {
+            if(printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode().equals("NUMOF")){
+                b = true;
+                numOf = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
+                System.out.println("~~~~ numOf is "+ numOf);
+            }
+             if(printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode().equals("INDICECLIENT")){
+                b = true;
+                indiceClient = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
+                System.out.println("~~~~ indiceClient is "+ indiceClient);
+             }
             System.out.println("the code is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode());
             System.out.println("the source is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource());
         }
-        System.out.println("$$$$$$$$$$$$$$$$$ Original data is $$$$$$$$$$$$$$$$$$$");
+        System.out.println("###################################### Original data is ######################################");
         for (int m = 0; m < original.get(postPrintInfo.getType()).getFields().getFields().size(); m++) {
             System.out.println("the code is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getCode());
             System.out.println("the source is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getSource());
         }
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.out.println("############################################################################");
         
         String filepath = FilePathDatabase.getFilePath();
-        System.out.println("filepath is " + filepath);
+        System.out.println("filepath is " + filepath );
         
         BufferedReader br = null;
+        String s="";
         try {
             String sCurrentLine;
             br = new BufferedReader(new FileReader(filepath)); //"/Users/LizSHAN/MORA/TB01.txt"
             System.out.println("######################################FILE CONTENT####################################################################");
             while ((sCurrentLine = br.readLine()) != null) {
                 System.out.println(sCurrentLine);
+                if(b){
+                    s = s + sCurrentLine.replace(numOf_old, numOf).replace(indiceClient_old, indiceClient)+"\n";   
+                }
             }
             System.out.println("#########################################################################################################");
             
+            if(b){
+                System.out.println("we have $NUMOF$ and $INDICECLIENT$ input .");
+                System.out.println("#################################### AFTER CHANGE NUMOF AND INNDICECLIENT ##################################################");
+                System.out.println(s);
+                System.out.println("#########################################################################################################");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -257,7 +283,6 @@ public class GenericResource {
                 ex.printStackTrace();
             }
         }
-        
         
         return  "result!";
     

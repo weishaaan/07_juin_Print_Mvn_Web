@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.Servlet;
 import LabelType.Field;
 import LabelType.Fields;
 import LabelType.LabelFormat;
@@ -8,6 +9,9 @@ import LabelType.LabelTypeDatabase;
 import LabelType.LabelTypeGet;
 import Printer_Marshall.PrinterDatabase;
 import Printer_Marshall.Printer;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -22,7 +26,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xmlbeans.XmlException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 @Path("home")
 public class GenericResource {
@@ -220,32 +232,36 @@ public class GenericResource {
             System.out.println("the source is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getSource());
         }
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        //modifier ficher txt, tranferer tous ---?ficheri txt.
+        
+        String filepath = FilePathDatabase.getFilePath();
+        System.out.println("filepath is " + filepath);
+        
+        BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(filepath)); //"/Users/LizSHAN/MORA/TB01.txt"
+            System.out.println("######################################FILE CONTENT####################################################################");
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+            }
+            System.out.println("#########################################################################################################");
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
         
         return  "result!";
     
     }
-    
-    
-
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
     

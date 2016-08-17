@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
     <LABELTYPE>
+        <GENERIC>Test Becton 2</GENERIC>
+        <REFERENCE>TB01</REFERENCE>
+        <LABELNAME>Galia Standard Motus - client Becton</LABELNAME>
+        <DESCRIPTION>Etiquette standard Mora - Norme Galia - Becton</DESCRIPTION>
+        <FORMAT>
+            <FORMATNAME>A6</FORMATNAME>
+            <WIDTH>102</WIDTH>
+            <LENGTH>213</LENGTH>
+        </FORMAT>
+        <FIELDS>
+            <FIELD>
+                <CODE>NUMOF</CODE>
+                <DESCRIPTION>Numéro d'of</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X></X>
+                <Y></Y>
+                <VALUE></VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>Divalto</SOURCE>
+            </FIELD>
+            <FIELD>
+                <CODE>INDICECLIENT</CODE>
+                <DESCRIPTION>Numéro d'indice piece client</DESCRIPTION>
+                <TYPE>String</TYPE>
+                <X></X>
+                <Y></Y>
+                <VALUE></VALUE>
+                <CALCULATED>N</CALCULATED>
+                <SOURCE>UserInput</SOURCE>
+            </FIELD>                                                                                                     
+        </FIELDS>    
+    </LABELTYPE>
+    
+    <LABELTYPE>
         <GENERIC>Galia Standard Motus</GENERIC>
         <REFERENCE>MOT01</REFERENCE>
         <LABELNAME>Galia Standard Motus</LABELNAME>
@@ -130,9 +164,7 @@
                 <VALUE>16/07/22</VALUE>
                 <CALCULATED>N</CALCULATED>
                 <SOURCE>UserInput</SOURCE>
-            </FIELD>                                                    
-                                                                        
-                                                                                                                        
+            </FIELD>                                                                                                    
         </FIELDS>    
     </LABELTYPE>
     

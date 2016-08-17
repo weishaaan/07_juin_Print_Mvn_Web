@@ -1,28 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
-
 
 //long ofNum, long reference, String sreference
 public class Of {
     long ofNum;
     long reference;
     String sreference;
-    
-    
     String artDesignation;
     String nbArtPerContainer;
 
-    public void setArtDesignation(String artDesignation) {
-        this.artDesignation = artDesignation;
+    public Of() {
     }
-
-    public void setNbArtPerContainer(String nbArtPerContainer) {
+    
+    public Of(long ofNum, long reference, String sreference, String artDesignation, String nbArtPerContainer) {
+        this.ofNum = ofNum;
+        this.reference = reference;
+        this.sreference = sreference;
+        this.artDesignation = artDesignation;
         this.nbArtPerContainer = nbArtPerContainer;
     }
+
+    
+    
 
     public String getArtDesignation() {
         return artDesignation;
@@ -32,6 +30,17 @@ public class Of {
         return nbArtPerContainer;
     }
     
+    public long getOfNum() {
+        return ofNum;
+    }
+
+    public long getReference() {
+        return reference;
+    }
+
+    public String getSreference() {
+        return sreference;
+    }
     
     public void setOfNum(long ofNum) {
         this.ofNum = ofNum;
@@ -45,17 +54,14 @@ public class Of {
         this.sreference = sreference;
     }
 
-    public long getOfNum() {
-        return ofNum;
+    public void setArtDesignation(String artDesignation) {
+        this.artDesignation = artDesignation;
     }
 
-    public long getReference() {
-        return reference;
+    public void setNbArtPerContainer(String nbArtPerContainer) {
+        this.nbArtPerContainer = nbArtPerContainer;
     }
-
-    public String getSreference() {
-        return sreference;
-    }
+    
     
     
     

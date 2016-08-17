@@ -1,10 +1,12 @@
 package Printer_Marshall;
 
 import Model.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.xmlbeans.XmlException;
 
 public class PrinterDatabase {
     public static Map<String,Printer> catalogue = new HashMap<String,Printer>();
@@ -18,15 +20,15 @@ public class PrinterDatabase {
         return new ArrayList<Printer>(catalogue.values());
         
     }
-/*
-    public Printer getPrinter(String code) throws XmlException, IOException {
+
+    public Printer getPrinterByIP(String ip) throws XmlException, IOException {
         
-        Printer b = catalogue.get(code);
+        Printer p = catalogue.get(ip);
         
-        if(b!= null)
-            return b;
+        if(p!= null)
+            return p;
         else 
             return null;
     }
-    */
+    
 }

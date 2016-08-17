@@ -10,7 +10,6 @@ public class LabelType_Marshall {
     
     public LabelTypes unmarshaller(String fullPath) throws JAXBException {
         
-        
         System.out.println("--------------------Marshall Label_type path is :"+fullPath+"--------------------");
         
         JAXBContext jc = JAXBContext.newInstance(LabelTypes.class);
@@ -23,8 +22,11 @@ public class LabelType_Marshall {
             System.out.println("reference is "+ s.getReference() );
             
             for(int j = 0;j<s.getFields().getFields().size();j++){
-                System.out.println("those codes of fields is :"+s.getFields().getFields().get(j).getCode());
+                System.out.println("code is :"+s.getFields().getFields().get(j).getCode());
+                System.out.println("source is :"+s.getFields().getFields().get(j).getSource());
+                System.out.println("----------------------------");
             }
+            System.out.println("*******************************");
         }
         return lts;
     }

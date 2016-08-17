@@ -1,6 +1,5 @@
 package Model;
 
-import Label.Label;
 import Printer_Marshall.Printer;
 
 public class PrintJob {   

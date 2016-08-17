@@ -1,5 +1,8 @@
 package Model;
 
+import LabelType.Field;
+import LabelType.Fields;
+import LabelType.LabelFormat;
 import LabelType.LabelType;
 import LabelType.LabelTypeDatabase;
 import LabelType.LabelTypeGet;
@@ -14,6 +17,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.xmlbeans.XmlException;
 
 @Path("home")
 public class GenericResource {
@@ -21,7 +30,7 @@ public class GenericResource {
     PrinterStatus printStatus = new PrinterStatus();
     PrintJob printjob = new PrintJob();
     PrinterDatabase printerDatabase = new PrinterDatabase();
-    LabelTypeDatabase labelTypeDatabase = new LabelTypeDatabase();
+    
     
     public GenericResource() {
     }
@@ -115,7 +124,7 @@ public class GenericResource {
     @Path("getLabelTypes")
     @Produces(MediaType.APPLICATION_JSON)
     public List<LabelTypeGet> getAllLabel() throws IOException{
-            
+        LabelTypeDatabase labelTypeDatabase = new LabelTypeDatabase();
         List<LabelTypeGet> l = new ArrayList<LabelTypeGet>();
         for(int i = 0 ; i < labelTypeDatabase.getAllLabelTypes().size() ; i++){
             LabelTypeGet ltg = new LabelTypeGet();
@@ -125,6 +134,7 @@ public class GenericResource {
             l.add(ltg);
         }
         
+        
         return l;
     }
     
@@ -132,24 +142,92 @@ public class GenericResource {
     @Path("postPrintMessage")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String postNameRunBat(PostPrintInfo postPrintInfo){  
+    public String labelPrint(PostPrintInfo postPrintInfo){  
+        LabelTypeDatabase labelTypeDatabase = new LabelTypeDatabase();
+        //{"ofNum":"2","ip":"192.168.1.1","num":"3","type":"GALIASTD",
+        //"userInputs":[{"code":"Z1","value":"z1"}]}
         
-        /*
-        printjob.setOfNum(postPrintInfo.getOfNum());
-        printjob.setIp(postPrintInfo.getIp());
-        printjob.setNum(postPrintInfo.getNum());
-        printjob.setType(postPrintInfo.getType());
-        printjob.setExpress(postPrintInfo.getExpress());
-        printjob.setDate(postPrintInfo.getDate());
-        printjob.setBl(postPrintInfo.getBl());
-        */
+        //ofNum
+        Of of = new Of();
+        of.setOfNum(postPrintInfo.getOfNum());
         
-        System.out.println("Successfully $POST params to web service!");
+        //Printer
+        Printer printer = new Printer();
+        try {
+            printer = printerDatabase.getPrinterByIP(postPrintInfo.getIp());
+        } catch (XmlException | IOException ex) {
+            Logger.getLogger(GenericResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        return  "result ";
-          //printjob.getOfNum()+printjob.getBl()+printjob.getExpress()+printjob.getDate()+printjob.getIp()+printjob.getType(); 
+        //Label
+        Label label = new Label();
+        Map<String,LabelType> original = labelTypeDatabase.getMapLabelTypes(); //return catalogue
+        Map<String,LabelType> hashmapB = new HashMap<String,LabelType>();
+        for (Entry<String,LabelType> entry : original.entrySet()) {
+            String gnr = entry.getValue().getGeneric();
+            String rf = entry.getValue().getReference();
+            String ln = entry.getValue().getLabelName();
+            String des = entry.getValue().getDescription();
+            LabelFormat lf = new LabelFormat(entry.getValue().getFormat().getName(),entry.getValue().getFormat().getLength()
+                            ,entry.getValue().getFormat().getWidth());
+            Fields fs = new Fields();
+            List<Field> fields = new ArrayList<Field>();
+            for (int i = 0; i < entry.getValue().getFields().getFields().size(); i++) {
+                String cd = entry.getValue().getFields().getFields().get(i).getCode();
+                String desc = entry.getValue().getFields().getFields().get(i).getDescription();
+                String tp = entry.getValue().getFields().getFields().get(i).getType();
+                Float x = entry.getValue().getFields().getFields().get(i).getX();
+                Float y = entry.getValue().getFields().getFields().get(i).getY();
+                String val = entry.getValue().getFields().getFields().get(i).getValue();
+                String cal = entry.getValue().getFields().getFields().get(i).getCalculated();
+                String sr = entry.getValue().getFields().getFields().get(i).getSource();
+                Field fd = new Field(cd,des,tp,x,y,val,cal,sr);
+                fields.add(fd);
+            }
+            fs.setFields(fields);
+            hashmapB.put(entry.getKey(), new LabelType(gnr,rf,ln,des,lf,fs));
+        }
+        LabelType labelType = new LabelType();
+        labelType = hashmapB.get(postPrintInfo.getType());
+        
+        for(int i = 0; i<labelType.getFields().getFields().size(); i++){
+            for(int j = 0; j < postPrintInfo.getUserInputs().size(); j++){
+                if(labelType.getFields().getFields().get(i).getCode().equals(postPrintInfo.getUserInputs().get(j).getCode())){
+                    labelType.getFields().getFields().get(i).setSource(postPrintInfo.getUserInputs().get(j).getValue());
+                    break;
+                }
+            }
+        }
+        
+        label.setLabelNumber(postPrintInfo.getNum());
+        label.setLabelType(labelType);
+        
+        printjob.setPrinter(printer);
+        printjob.setLabel(label);
+        
+        System.out.println("******************* ofNum is:" + of.getOfNum() + " *******************");
+        System.out.println("******************* ip is: " + printjob.getPrinter().getIp() + " *******************");
+        System.out.println("******************* label number is: " + printjob.getLabel().getLabelNumber() + " *******************");
+        System.out.println("******************* label reference is :" + printjob.getLabel().getLabelType().getReference() + "*******************");
+        
+        for (int m = 0; m < printjob.getLabel().getLabelType().getFields().getFields().size(); m++) {
+            System.out.println("the code is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode());
+            System.out.println("the source is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource());
+        }
+        System.out.println("$$$$$$$$$$$$$$$$$ Original data is $$$$$$$$$$$$$$$$$$$");
+        for (int m = 0; m < original.get(postPrintInfo.getType()).getFields().getFields().size(); m++) {
+            System.out.println("the code is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getCode());
+            System.out.println("the source is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getSource());
+        }
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        //modifier ficher txt, tranferer tous ---?ficheri txt.
+        
+        return  "result!";
+    
     }
     
+    
+
         
     
     

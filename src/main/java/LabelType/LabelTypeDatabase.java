@@ -20,12 +20,10 @@ public class LabelTypeDatabase {
         return new ArrayList<LabelType>(catalogue.values());
         
     }
-
+    
     /*
     public LabelType getLabelType(String reference) throws XmlException, IOException {
-        
         LabelType b = catalogue.get(reference);
-        
         if(b!= null)
             return b;
         else 

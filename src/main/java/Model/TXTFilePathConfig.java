@@ -13,9 +13,9 @@ import org.xml.sax.SAXException;
 public class TXTFilePathConfig {
     String s;
     
-    public TXTFilePathConfig(String fullPath_TB01) {
+    public TXTFilePathConfig(String fullPath_label_model) {
         System.out.println("~~~~~~~~~~TXTFilePath~~~~~~~~~~~~~~~");
-        File fXmlFile = new File(fullPath_TB01);
+        File fXmlFile = new File(fullPath_label_model);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
         try {

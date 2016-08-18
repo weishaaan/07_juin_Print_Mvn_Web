@@ -1,6 +1,5 @@
 package Model;
 
-import Controller.Servlet;
 import LabelType.Field;
 import LabelType.Fields;
 import LabelType.LabelFormat;
@@ -10,7 +9,6 @@ import LabelType.LabelTypeGet;
 import Printer_Marshall.PrinterDatabase;
 import Printer_Marshall.Printer;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -26,15 +24,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xmlbeans.XmlException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 @Path("home")
 public class GenericResource {
@@ -43,14 +33,7 @@ public class GenericResource {
     PrintJob printjob = new PrintJob();
     PrinterDatabase printerDatabase = new PrinterDatabase();
     
-    
     public GenericResource() {
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN) //MediaType.APPLICATION_XML
-    public String Test(){
-        return "5:31 pm";
     }
     
     @GET
@@ -105,32 +88,12 @@ public class GenericResource {
         return list;
     }
     
-    
     @GET
     @Path("getAllPrinter")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Printer> getAllPrinter() throws IOException{
         return printerDatabase.getAllPrinters();
     }
-    /*
-    @GET
-    @Path("getLabelTypes")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<LabelTypeGet> getAllLabel() throws IOException{
-            
-        List<LabelTypeGet> l = new ArrayList<LabelTypeGet>();
-        for(int i = 0 ; i < labelTypeDatabase.getAllLabelTypes().size() ; i++){
-            LabelTypeGet ltg = new LabelTypeGet();
-            ltg.setReference(labelTypeDatabase.getAllLabelTypes().get(i).getReference());
-            ltg.setS(labelTypeDatabase.getAllLabelTypes().get(i).toString());
-            
-            l.add(ltg);
-        }
-        
-        return l;
-    }
-    //reference toString getReference()+" - "+ getLabelName();
-    */
     
     @GET
     @Path("getLabelTypes")
@@ -145,8 +108,6 @@ public class GenericResource {
             ltg.setListField(labelTypeDatabase.getAllLabelTypes().get(i).getFields().getFields());
             l.add(ltg);
         }
-        
-        
         return l;
     }
     
@@ -222,26 +183,16 @@ public class GenericResource {
         System.out.println("******************* label number is: " + printjob.getLabel().getLabelNumber() + " *******************");
         System.out.println("******************* label reference is :" + printjob.getLabel().getLabelType().getReference() + "*******************");
         
-        Boolean b = false;
-        String numOf = null;
-        String indiceClient = null;
-        String numOf_old = "$NUMOF$";
-        String indiceClient_old = "$INDICECLIENT$";
-        
+        Map <String, String> hm_post_data = new HashMap<>();
+        String code,source;
         for (int m = 0; m < printjob.getLabel().getLabelType().getFields().getFields().size(); m++) {
-            if(printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode().equals("NUMOF")){
-                b = true;
-                numOf = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
-                System.out.println("~~~~ numOf is "+ numOf);
-            }
-             if(printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode().equals("INDICECLIENT")){
-                b = true;
-                indiceClient = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
-                System.out.println("~~~~ indiceClient is "+ indiceClient);
-             }
-            System.out.println("the code is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode());
-            System.out.println("the source is :" + printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource());
+            code = printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode();
+            source = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
+            hm_post_data.put(code,source);
+            System.out.println("the code is :" + code);
+            System.out.println("the source is :" + source);
         }
+        
         System.out.println("###################################### Original data is ######################################");
         for (int m = 0; m < original.get(postPrintInfo.getType()).getFields().getFields().size(); m++) {
             System.out.println("the code is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getCode());
@@ -256,22 +207,22 @@ public class GenericResource {
         String s="";
         try {
             String sCurrentLine;
-            br = new BufferedReader(new FileReader(filepath)); //"/Users/LizSHAN/MORA/TB01.txt"
+            br = new BufferedReader(new FileReader(filepath));
             System.out.println("######################################FILE CONTENT####################################################################");
             while ((sCurrentLine = br.readLine()) != null) {
                 System.out.println(sCurrentLine);
-                if(b){
-                    s = s + sCurrentLine.replace(numOf_old, numOf).replace(indiceClient_old, indiceClient)+"\n";   
-                }
-            }
+                s = s + sCurrentLine+"\n";
+            } 
             System.out.println("#########################################################################################################");
-            
-            if(b){
-                System.out.println("we have $NUMOF$ and $INDICECLIENT$ input .");
-                System.out.println("#################################### AFTER CHANGE NUMOF AND INNDICECLIENT ##################################################");
-                System.out.println(s);
-                System.out.println("#########################################################################################################");
+           
+            System.out.println("#################################### AFTER CHANGE NUMOF AND INNDICECLIENT ##################################################");
+            for (Map.Entry<String, String> entry : hm_post_data.entrySet()) {
+                 s = s.replace("$"+entry.getKey().toUpperCase()+"$",entry.getValue());
             }
+               
+            System.out.println(s);
+            System.out.println("#########################################################################################################");
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

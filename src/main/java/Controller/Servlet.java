@@ -1,7 +1,7 @@
 package Controller;
 
 import LabelType.LabelTypeConfig;
-import Model.TXTFilePathConfig;
+import Model.FilePathConfig;
 import Printer_Marshall.PrinterConfig;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -14,7 +14,7 @@ import org.apache.xmlbeans.XmlException;
  
 public class Servlet implements ServletContextListener {
     
-    String fullPath_printer,fullPath_labelType,fullPath_label_model;
+    String fullPath_printer,fullPath_labelType,fullPath_files_path;
     
     @Override
     public void contextInitialized(ServletContextEvent contextEvent){
@@ -23,10 +23,10 @@ public class Servlet implements ServletContextListener {
         ServletContext context = contextEvent.getServletContext();
         fullPath_printer = context.getRealPath("/WEB-INF/printer_catalog.xml");
         fullPath_labelType = context.getRealPath("/WEB-INF/label_type_catalog.xml");
-        fullPath_label_model = context.getRealPath("/WEB-INF/label_model_file_path.xml");
+        fullPath_files_path = context.getRealPath("/WEB-INF/files_path.xml");
         
         System.out.println("MyServlet full path is :"+fullPath_printer);
-        System.out.println("***********label model PATH is**************"+fullPath_label_model);
+        System.out.println("***********label model PATH is**************"+fullPath_files_path);
         
         try {
             PrinterConfig printerConfig = new PrinterConfig(fullPath_printer);
@@ -40,7 +40,11 @@ public class Servlet implements ServletContextListener {
             Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        TXTFilePathConfig txtFilePath = new TXTFilePathConfig(fullPath_label_model);
+        try {
+            FilePathConfig txtFilePath = new FilePathConfig(fullPath_files_path);
+        } catch (XmlException | IOException | JAXBException ex) {
+            Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
     }
     

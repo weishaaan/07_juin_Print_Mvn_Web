@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <path>
+        <name>labelmodels</name>
+        <absolutepath>/Users/LizSHAN/MORA/</absolutepath>
+    </path>
+    <path>
+        <name>logs</name>
+        <absolutepath>....\Logs</absolutepath>
+    </path>
+</configuration>

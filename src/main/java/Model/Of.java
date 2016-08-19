@@ -1,25 +1,30 @@
 package Model;
 
 //long ofNum, long reference, String sreference
+
+import java.util.Date;
+
 public class Of {
     long ofNum;
     long reference;
     String sreference;
     String artDesignation;
     String nbArtPerContainer;
-
+    int qteOfEntete;
+    Date datePlainfDebut;
+    
     public Of() {
     }
-    
-    public Of(long ofNum, long reference, String sreference, String artDesignation, String nbArtPerContainer) {
+
+    public Of(long ofNum, long reference, String sreference, String artDesignation, String nbArtPerContainer, int qteOfEntete, Date datePlainfDebut) {
         this.ofNum = ofNum;
         this.reference = reference;
         this.sreference = sreference;
         this.artDesignation = artDesignation;
         this.nbArtPerContainer = nbArtPerContainer;
+        this.qteOfEntete = qteOfEntete;
+        this.datePlainfDebut = datePlainfDebut;
     }
-
-    
     
 
     public String getArtDesignation() {
@@ -41,6 +46,16 @@ public class Of {
     public String getSreference() {
         return sreference;
     }
+
+    public int getQteOfEntete() {
+        return qteOfEntete;
+    }
+
+    public Date getDatePlainfDebut() {
+        return datePlainfDebut;
+    }
+    
+    
     
     public void setOfNum(long ofNum) {
         this.ofNum = ofNum;
@@ -60,6 +75,14 @@ public class Of {
 
     public void setNbArtPerContainer(String nbArtPerContainer) {
         this.nbArtPerContainer = nbArtPerContainer;
+    }
+
+    public void setQteOfEntete(int qteOfEntete) {
+        this.qteOfEntete = qteOfEntete;
+    }
+
+    public void setDatePlainfDebut(Date datePlainfDebut) {
+        this.datePlainfDebut = datePlainfDebut;
     }
     
     

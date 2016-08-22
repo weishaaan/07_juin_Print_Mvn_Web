@@ -11,12 +11,12 @@ public class Of {
     String artDesignation;
     String nbArtPerContainer;
     int qteOfEntete;
-    Date datePlainfDebut;
+    String datePlainfDebut;
     
     public Of() {
     }
 
-    public Of(long ofNum, long reference, String sreference, String artDesignation, String nbArtPerContainer, int qteOfEntete, Date datePlainfDebut) {
+    public Of(long ofNum, long reference, String sreference, String artDesignation, String nbArtPerContainer, int qteOfEntete, String datePlainfDebut) {
         this.ofNum = ofNum;
         this.reference = reference;
         this.sreference = sreference;
@@ -51,7 +51,7 @@ public class Of {
         return qteOfEntete;
     }
 
-    public Date getDatePlainfDebut() {
+    public String getDatePlainfDebut() {
         return datePlainfDebut;
     }
     
@@ -81,7 +81,7 @@ public class Of {
         this.qteOfEntete = qteOfEntete;
     }
 
-    public void setDatePlainfDebut(Date datePlainfDebut) {
+    public void setDatePlainfDebut(String datePlainfDebut) {
         this.datePlainfDebut = datePlainfDebut;
     }
     

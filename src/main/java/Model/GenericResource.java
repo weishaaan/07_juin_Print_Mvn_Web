@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
@@ -45,25 +49,18 @@ public class GenericResource {
         return "printerStatus";
     }
 
-    @POST
-    @Path("postOF")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Of> getOF(OfPost oneOF) {
-        List<Of> list = new ArrayList<Of>();
-        
-        
-        
-        
-        
-        return list;
-    }
-
     @GET
     @Path("getOfList")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Of> getOfList() {
-        List<Of> list = new ArrayList<Of>();
+    public List<Of> getOF(@QueryParam("ref") long ref,
+                          @QueryParam("sref") String sref,
+                          @QueryParam("date_start") String date_start,
+                          @QueryParam("date_end") String date_end){
+        
+        List<Of> list = new ArrayList<>();
+        List<Of> list_return = new ArrayList<>();
+        
         Of ofclass1 = new Of();
         ofclass1.setOfNum(980319);
         ofclass1.setReference(11226200);
@@ -185,9 +182,28 @@ public class GenericResource {
         ofclass15.setArtDesignation("CAPOT TG 8/12");
         ofclass15.setNbArtPerContainer("80");
         list.add(ofclass15);
-
-        return list;
+       
+        for (Of one : list) {
+            if (one.getReference() == ref) {
+                list_return.add(one);
+            }
+        }
+        
+        if (sref != null && !sref.equals("")) {
+            System.out.println(" --- sous ref is not null ---");
+            List<Of> list_return_sous_ref = new ArrayList<>();
+            for(Of x :list_return ){
+                if(x.getSreference().equals(sref))
+                    list_return_sous_ref.add(x);
+            }
+            list_return = list_return_sous_ref;
+        }
+        
+        //date filter date_start}/{date_end}")
+        
+        return list_return;
     }
+
 
     @GET
     @Path("getAllPrinter")
@@ -212,27 +228,39 @@ public class GenericResource {
         return l;
     }
 
-    @POST
+    @GET
     @Path("postPrintMessage")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String labelPrint(PostPrintInfo postPrintInfo) {
+    public String labelPrint(@QueryParam("ofNum") long ofNum,
+                          @QueryParam("ip") String ip,
+                          @QueryParam("num") int num,
+                          @QueryParam("type") String type,
+                          @QueryParam("userInputs") List<String> userInputs) {
 
-        //{"ofNum":"2","ip":"192.168.1.1","num":"3","type":"GALIASTD",
-        //"userInputs":[{"code":"Z1","value":"z1"}]}
+        List<UserInput> ui_list = new ArrayList<>();
+        for(int m = 0; m < userInputs.size()/2; m++ ){
+            UserInput ui = new UserInput();
+            ui.setCode(userInputs.get(m));
+            ui.setValue(userInputs.get(m+1));
+            ui_list.add(ui);
+            m = m + 1;
+        }
+        
         //ofNum
         Of of = new Of();
-        of.setOfNum(postPrintInfo.getOfNum());
+        of.setOfNum(ofNum);
 
         //Printer
         Printer printer = new Printer();
         try {
-            printer = printerDatabase.getPrinterByIP(postPrintInfo.getIp());
+            printer = printerDatabase.getPrinterByIP(ip);
         } catch (XmlException | IOException ex) {
             logger.error("This is error : can't get printer list");
         }
 
         //Label
+        
         Label label = new Label();
         Map<String, LabelType> original = LabelTypeDatabase.getMapLabelTypes(); //return catalogue
         Map<String, LabelType> hashmapB = new HashMap<>();
@@ -260,18 +288,18 @@ public class GenericResource {
             hashmapB.put(entry.getKey(), new LabelType(gnr, rf, ln, des, lf, fs));
         }
         LabelType labelType = new LabelType();
-        labelType = hashmapB.get(postPrintInfo.getType());
+        labelType = hashmapB.get(type);
 
         for (int i = 0; i < labelType.getFields().getFields().size(); i++) {
-            for (int j = 0; j < postPrintInfo.getUserInputs().size(); j++) {
-                if (labelType.getFields().getFields().get(i).getCode().equals(postPrintInfo.getUserInputs().get(j).getCode())) {
-                    labelType.getFields().getFields().get(i).setSource(postPrintInfo.getUserInputs().get(j).getValue());
+            for (int j = 0; j < ui_list.size(); j++) {
+                if (labelType.getFields().getFields().get(i).getCode().equals(ui_list.get(j).getCode())) {
+                    labelType.getFields().getFields().get(i).setSource(ui_list.get(j).getValue());
                     break;
                 }
             }
         }
 
-        label.setLabelNumber(postPrintInfo.getNum());
+        label.setLabelNumber(num);
         label.setLabelType(labelType);
 
         printjob.setPrinter(printer);
@@ -314,9 +342,9 @@ public class GenericResource {
         logger.info("The type of ticket(reference) is : " + label_ref + ", those values changed by users are : [ " + label_log + "]");
 
         System.out.println("###################################### Original data is ######################################");
-        for (int m = 0; m < original.get(postPrintInfo.getType()).getFields().getFields().size(); m++) {
-            System.out.println("the code is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getCode());
-            System.out.println("the source is :" + original.get(postPrintInfo.getType()).getFields().getFields().get(m).getSource());
+        for (int m = 0; m < original.get(type).getFields().getFields().size(); m++) {
+            System.out.println("the code is :" + original.get(type).getFields().getFields().get(m).getCode());
+            System.out.println("the source is :" + original.get(type).getFields().getFields().get(m).getSource());
         }
         System.out.println("############################################################################");
 

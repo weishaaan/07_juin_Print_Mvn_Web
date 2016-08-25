@@ -11,24 +11,35 @@ import Printer_Marshall.Printer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
+
 
 @Path("home")
 public class GenericResource {
@@ -37,6 +48,9 @@ public class GenericResource {
     PrintJob printjob = new PrintJob();
     PrinterDatabase printerDatabase = new PrinterDatabase();
     static final Logger logger = Logger.getLogger(GenericResource.class);
+    DBConnection dbCon;
+    Connection conn;
+    ResultSet rslt;
 
     public GenericResource() {
     }
@@ -49,160 +63,7 @@ public class GenericResource {
         return "printerStatus";
     }
 
-    @GET
-    @Path("getOfList")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Of> getOF(@QueryParam("ref") long ref,
-                          @QueryParam("sref") String sref,
-                          @QueryParam("date_start") String date_start,
-                          @QueryParam("date_end") String date_end){
-        
-        List<Of> list = new ArrayList<>();
-        List<Of> list_return = new ArrayList<>();
-        
-        Of ofclass1 = new Of();
-        ofclass1.setOfNum(980319);
-        ofclass1.setReference(11226200);
-        ofclass1.setSreference("0");
-        ofclass1.setArtDesignation("LLA3");
-        ofclass1.setNbArtPerContainer("20000");
-
-        list.add(ofclass1);
-
-        Of ofclass2 = new Of();
-        ofclass2.setOfNum(980321);
-        ofclass2.setReference(11226200);
-        ofclass2.setSreference("0");
-        ofclass2.setArtDesignation("LLA3");
-        ofclass2.setNbArtPerContainer("20000");
-
-        list.add(ofclass2);
-
-        Of ofclass3 = new Of();
-        ofclass3.setOfNum(980322);
-        ofclass3.setReference(11178303);
-        ofclass3.setSreference("12 M");
-        ofclass3.setArtDesignation("BAGUE ANTI BRUIT 9435530 M GRI");
-        ofclass3.setNbArtPerContainer("5000");
-        list.add(ofclass3);
-
-        Of ofclass4 = new Of();
-        ofclass4.setOfNum(980323);
-        ofclass4.setReference(11216400);
-        ofclass4.setSreference("A");
-        ofclass4.setArtDesignation("ARMATURE EXT 3279-02 723842");
-        ofclass4.setNbArtPerContainer("400");
-        list.add(ofclass4);
-
-        Of ofclass5 = new Of();
-        ofclass5.setOfNum(980324);
-        ofclass5.setReference(11219000);
-        ofclass5.setSreference("M");
-        ofclass5.setArtDesignation("CAPSULE DE ROULEMENT");
-        ofclass5.setNbArtPerContainer("600");
-        list.add(ofclass5);
-
-        Of ofclass6 = new Of();
-        ofclass6.setOfNum(980325);
-        ofclass6.setReference(11220800);
-        ofclass6.setSreference("F");
-        ofclass6.setArtDesignation("CONNECTEUR TG 8-12 BORNE A GAU");
-        ofclass6.setNbArtPerContainer("30");
-        list.add(ofclass6);
-
-        Of ofclass7 = new Of();
-        ofclass7.setOfNum(980323);
-        ofclass7.setReference(11216400);
-        ofclass7.setSreference("A");
-        ofclass7.setArtDesignation("ARMATURE EXT 3279-02 723842");
-        ofclass7.setNbArtPerContainer("400");
-        list.add(ofclass7);
-
-        Of ofclass8 = new Of();
-        ofclass8.setOfNum(980325);
-        ofclass8.setReference(11220800);
-        ofclass8.setSreference("F");
-        ofclass8.setArtDesignation("CONNECTEUR TG 8-12 BORNE A GAU");
-        ofclass8.setNbArtPerContainer("30");
-        list.add(ofclass8);
-
-        Of ofclass9 = new Of();
-        ofclass9.setOfNum(980326);
-        ofclass9.setReference(11220801);
-        ofclass9.setSreference("J");
-        ofclass9.setArtDesignation("CONNECTEUR TG 8-12 BORNE A DRO");
-        ofclass9.setNbArtPerContainer("30");
-        list.add(ofclass9);
-
-        Of ofclass10 = new Of();
-        ofclass10.setOfNum(980327);
-        ofclass10.setReference(11238100);
-        ofclass10.setSreference("C");
-        ofclass10.setArtDesignation("CANON ISOLANT XG");
-        ofclass10.setNbArtPerContainer("5000");
-        list.add(ofclass10);
-
-        Of ofclass11 = new Of();
-        ofclass11.setOfNum(980328);
-        ofclass11.setReference(11238300);
-        ofclass11.setSreference("A01");
-        ofclass11.setArtDesignation("ENJOLIVEUR CLE MVDV");
-        ofclass11.setNbArtPerContainer("1000");
-        list.add(ofclass11);
-
-        Of ofclass12 = new Of();
-        ofclass12.setOfNum(980329);
-        ofclass12.setReference(11238500);
-        ofclass12.setSreference("A01");
-        ofclass12.setArtDesignation("SOFT CLE MVDV");
-        ofclass12.setNbArtPerContainer("161");
-        list.add(ofclass12);
-
-        Of ofclass13 = new Of();
-        ofclass13.setOfNum(980330);
-        ofclass13.setReference(11239000);
-        ofclass13.setSreference("A");
-        ofclass13.setArtDesignation("OUTER SLEEVE 2023-02PSA065-02E");
-        ofclass13.setNbArtPerContainer("800");
-        list.add(ofclass13);
-
-        Of ofclass14 = new Of();
-        ofclass14.setOfNum(980331);
-        ofclass14.setReference(11239300);
-        ofclass14.setSreference("N2");
-        ofclass14.setArtDesignation("PROTECTEUR DE COLLECTEUR");
-        ofclass14.setNbArtPerContainer("900");
-        list.add(ofclass14);
-
-        Of ofclass15 = new Of();
-        ofclass15.setOfNum(980332);
-        ofclass15.setReference(11239800);
-        ofclass15.setSreference("B1");
-        ofclass15.setArtDesignation("CAPOT TG 8/12");
-        ofclass15.setNbArtPerContainer("80");
-        list.add(ofclass15);
-       
-        for (Of one : list) {
-            if (one.getReference() == ref) {
-                list_return.add(one);
-            }
-        }
-        
-        if (sref != null && !sref.equals("")) {
-            System.out.println(" --- sous ref is not null ---");
-            List<Of> list_return_sous_ref = new ArrayList<>();
-            for(Of x :list_return ){
-                if(x.getSreference().equals(sref))
-                    list_return_sous_ref.add(x);
-            }
-            list_return = list_return_sous_ref;
-        }
-        
-        //date filter date_start}/{date_end}")
-        
-        return list_return;
-    }
+    
 
 
     @GET
@@ -405,5 +266,60 @@ public class GenericResource {
     public String getRetourData() {
         return RetourDatabase.getRetourDatabase().get("retourdata");
     }
+    
+    @GET
+    @Path("getOfList")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Of> getOF(@QueryParam("ref") long ref,
+                          @QueryParam("sref") String sref,
+                          @QueryParam("date_start") String date_start,
+                          @QueryParam("date_end") String date_end) throws SQLException{
+        
+        //System.out.println("date_start: " + date_start);//08/03/2016
+        String date1 = null;
+        String date2 = null;
+        String path_mysql = "?ref=" + ref ;
+        List<Of> return_list = new ArrayList<>();
+        
+        if(sref !=null && !sref.equals("")){
+            path_mysql = path_mysql + "&sref=" + sref;
+        }
+        
+        if(date_start!=null && !date_start.equals("") && date_end!=null && !date_end.equals("")){
+            date1 = "\"" + date_start.substring(6, 10)+'-'+date_start.substring(0,2)+'-'+date_start.substring(3,5)+" 00:00:00 "+"\"";
+            date2 = "\"" + date_end.substring(6, 10)+'-'+date_end.substring(0,2)+'-'+date_end.substring(3,5)+" 00:00:00 "+"\"";
+            path_mysql = path_mysql+ "&date_start=" + date1 +"&date_end=" + date2;
+        }
+                        
+        String uri = "http://localhost:8080/OF_MVN/webresources/home/testJNDI";
+        
+        
+        try {
+            
+            
+            Client client = ClientBuilder.newClient( new ClientConfig().register( LoggingFilter.class ) );
+            WebTarget webTarget = client.target(uri+path_mysql);
 
+            Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get(Response.class);
+            return_list = response.readEntity(new GenericType<List<Of>>(){});      
+             
+            System.out.println("list size is :" + return_list.size());
+            
+            StringBuilder builder = new StringBuilder("=== Ofs ===\n");
+            for (Of of: return_list) {
+                builder.append("OfNum: ").append(of.getOfNum()).append(", ")
+                        .append("reference: ").append(of.getReference()).append("\n");          
+            }
+            builder.append("==================");
+            System.out.println(builder.toString());   
+                    
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return return_list;
+    }
 }

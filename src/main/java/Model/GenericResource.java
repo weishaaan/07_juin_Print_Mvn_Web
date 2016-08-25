@@ -281,7 +281,11 @@ public class GenericResource {
         String date2 = null;
         String path_mysql = "?ref=" + ref ;
         List<Of> return_list = new ArrayList<>();
-        
+        String uri = null;//"http://localhost:8080/OF_MVN/webresources/home/testJNDI";
+        Map<String, String> filepath_catalogue = FilePathDatabase.getFilePathCatalogue();
+        uri = filepath_catalogue.get("of_database");
+        System.out.println("uri is :" + uri);
+
         if(sref !=null && !sref.equals("")){
             path_mysql = path_mysql + "&sref=" + sref;
         }
@@ -292,12 +296,7 @@ public class GenericResource {
             path_mysql = path_mysql+ "&date_start=" + date1 +"&date_end=" + date2;
         }
                         
-        String uri = "http://localhost:8080/OF_MVN/webresources/home/testJNDI";
-        
-        
         try {
-            
-            
             Client client = ClientBuilder.newClient( new ClientConfig().register( LoggingFilter.class ) );
             WebTarget webTarget = client.target(uri+path_mysql);
 
@@ -315,7 +314,6 @@ public class GenericResource {
             builder.append("==================");
             System.out.println(builder.toString());   
                     
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -5,7 +5,7 @@
         <absolutepath>/Users/LizSHAN/MORA/</absolutepath>
     </path>
     <path>
-        <name>logs</name>
-        <absolutepath>....\Logs</absolutepath>
+        <name>of_database</name>
+        <absolutepath>http://localhost:8080/OF_MVN/webresources/home/testJNDI</absolutepath>
     </path>
 </configuration>

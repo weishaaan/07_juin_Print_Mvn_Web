@@ -1,6 +1,5 @@
 package com.mora.labeltype;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,10 +14,6 @@ public class LabelTypes {
     public List<LabelType> labelTypes;
 
     public List<LabelType> getLabelTypes() {
-        /*if (this.labelTypes == null) {
-            this.labelTypes = new ArrayList<LabelType>();
-        }
-        */
         return labelTypes;
     }
  

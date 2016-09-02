@@ -59,6 +59,9 @@ public class GenericResource {
     @Path("getAllPrinter")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Printer> getAllPrinter() throws IOException {
+        
+        logger.info("get printer list ! ");
+        
         return printerDatabase.getAllPrinters();
     }
 
@@ -66,6 +69,9 @@ public class GenericResource {
     @Path("getLabelTypes")
     @Produces(MediaType.APPLICATION_JSON)
     public List<LabelTypeGet> getAllLabel() throws IOException {
+        
+        logger.info("get label types ! ");
+        
         LabelTypeDatabase labelTypeDatabase = new LabelTypeDatabase();
         List<LabelTypeGet> l = new ArrayList<>();
         for (int i = 0; i < labelTypeDatabase.getAllLabelTypes().size(); i++) {
@@ -88,6 +94,9 @@ public class GenericResource {
                           @QueryParam("type") String type,
                           @QueryParam("userInputs") List<String> userInputs) {
 
+        
+        logger.info("post print message ! ");
+         
         List<UserInput> ui_list = new ArrayList<>();
         for(int m = 0; m < userInputs.size()/2; m++ ){
             UserInput ui = new UserInput();
@@ -253,6 +262,8 @@ public class GenericResource {
     @Path("getRetourData")
     @Produces(MediaType.TEXT_PLAIN)
     public String getRetourData() {
+        
+        logger.info("get retour data ! ");
         return RetourDatabase.getRetourDatabase().get("retourdata");
     }
     
@@ -265,6 +276,8 @@ public class GenericResource {
                           @QueryParam("date_start") String date_start,
                           @QueryParam("date_end") String date_end) throws SQLException{
         
+        logger.info("get of list ! ");
+         
         //System.out.println("date_start: " + date_start);//08/03/2016
         String date1 = null;
         String date2 = null;

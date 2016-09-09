@@ -6,16 +6,20 @@ public class PrintJob {
     Label label;
     Printer printer;
     Config config;
-    
-    public PrintJob(Label label,Printer printer, Config config) {
+    int nbrEtiqHousse;
+    int nbreEtiqPrelev;
+
+    public PrintJob(Label label, Printer printer, Config config, int nbrEtiqHousse, int nbreEtiqPrelev) {
         this.label = label;
         this.printer = printer;
         this.config = config;
+        this.nbrEtiqHousse = nbrEtiqHousse;
+        this.nbreEtiqPrelev = nbreEtiqPrelev;
     }
 
     public PrintJob() {
-        
     }
+    
     
     public void print(){
         // print(ofnum, nbre, labelCode, printer): type
@@ -27,6 +31,7 @@ public class PrintJob {
     }
     
     //******************* GET & SET ************************************
+
     public Label getLabel() {
         return label;
     }
@@ -37,6 +42,14 @@ public class PrintJob {
 
     public Config getConfig() {
         return config;
+    }
+
+    public int getNbrEtiqHousse() {
+        return nbrEtiqHousse;
+    }
+
+    public int getNbreEtiqPrelev() {
+        return nbreEtiqPrelev;
     }
 
     public void setLabel(Label label) {
@@ -50,6 +63,15 @@ public class PrintJob {
     public void setConfig(Config config) {
         this.config = config;
     }
+
+    public void setNbrEtiqHousse(int nbrEtiqHousse) {
+        this.nbrEtiqHousse = nbrEtiqHousse;
+    }
+
+    public void setNbreEtiqPrelev(int nbreEtiqPrelev) {
+        this.nbreEtiqPrelev = nbreEtiqPrelev;
+    }
+    
     
     
 }

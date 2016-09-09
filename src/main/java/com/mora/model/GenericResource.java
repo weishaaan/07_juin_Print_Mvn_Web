@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
@@ -44,7 +46,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.filter.LoggingFilter;
 
 
-@Path("home")
+@Path("/")
 public class GenericResource {
 
     PrinterStatus printStatus = new PrinterStatus();
@@ -84,17 +86,22 @@ public class GenericResource {
         return l;
     }
 
+    
+    
+    
     @GET
     @Path("postPrintMessage")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String labelPrint(@QueryParam("ofNum") long ofNum,
-                          @QueryParam("ip") String ip,
-                          @QueryParam("num") int num,
-                          @QueryParam("type") String type,
-                          @QueryParam("userInputs") List<String> userInputs) {
+    public String labelPrint(@QueryParam("ofNum") String ofNum,
+                             @QueryParam("type") String type,
+                             @QueryParam("userInputs") List<String> userInputs,
+                             @QueryParam("ip") String ip,
+                             @QueryParam("nbr_label") int nbr_label,
+                             @QueryParam("nbr_art") int nbr_art,
+                             @QueryParam("nbr_label_h") int nbr_label_h,
+                             @QueryParam("nbr_label_p") int nbr_label_p){
 
-        
         logger.info("post print message ! ");
          
         List<UserInput> ui_list = new ArrayList<>();
@@ -106,11 +113,11 @@ public class GenericResource {
             m = m + 1;
         }
         
-        //ofNum
+        //ofNum 
         Of of = new Of();
         of.setOfNum(ofNum);
 
-        //Printer
+        //Printer ip
         Printer printer = new Printer();
         try {
             printer = printerDatabase.getPrinterByIP(ip);
@@ -118,8 +125,7 @@ public class GenericResource {
             logger.error("This is error : can't get printer list");
         }
 
-        //Label
-        
+        //Label type
         Label label = new Label();
         Map<String, LabelType> original = LabelTypeDatabase.getMapLabelTypes(); //return catalogue
         Map<String, LabelType> hashmapB = new HashMap<>();
@@ -157,13 +163,19 @@ public class GenericResource {
                 }
             }
         }
-
-        label.setLabelNumber(num);
+        
+        label.setOfNum(ofNum);
+        label.setLabelNumber(nbr_label);
+        label.setNbrArt(nbr_art);
         label.setLabelType(labelType);
-
+        
+        // set printjob
         printjob.setPrinter(printer);
         printjob.setLabel(label);
-
+        printjob.setNbrEtiqHousse(nbr_label_h);
+        printjob.setNbreEtiqPrelev(nbr_label_p);
+        
+        
         //printer information:
         String printer_name, printer_ip;
         printer_name = printjob.getPrinter().getName();
@@ -178,11 +190,13 @@ public class GenericResource {
         label_ref = printjob.getLabel().getLabelType().getReference();
         label_num = printjob.getLabel().getLabelNumber();
 
+        /* for test
         System.out.println("******************* ofNum is:" + of.getOfNum() + " *******************");
         System.out.println("******************* ip is: " + printer_ip + " *******************");
         System.out.println("******************* label number is: " + label_num + " *******************");
         System.out.println("******************* label reference is :" + label_ref + "*******************");
-
+        */
+        
         for (int m = 0; m < printjob.getLabel().getLabelType().getFields().getFields().size(); m++) {
             label_code = printjob.getLabel().getLabelType().getFields().getFields().get(m).getCode();
             label_source = printjob.getLabel().getLabelType().getFields().getFields().get(m).getSource();
@@ -194,9 +208,7 @@ public class GenericResource {
                 label_log = label_log.substring(0, label_log.length() - 1);
             }
         }
-        //Les logs doivent tracer la date et l'heure + le type d'étiquette 
-        //+ toutes les valeurs modifiées par l'utilisateur + l'imprimante utilisée.
-
+        
         logger.info("The printer name is : " + printer_name + ", printer ip is : " + printer_ip);
         logger.info("The type of ticket(reference) is : " + label_ref + ", those values changed by users are : [ " + label_log + "]");
 
@@ -249,10 +261,10 @@ public class GenericResource {
 
         Map<String, String> retourData = RetourDatabase.getRetourDatabase();
         String data;
-        data = "num OF est : " + of.getOfNum() + "</p>"
-                + "Ip adresse d'imprimante est : " + printer_ip + "</p>"
-                + "Nombre d'étiquette est : " + label_num + "</p>"
-                + "Type d'étiquette(reference) est : " + label_ref + "</p>";
+        data = "num OF est : " + printjob.getLabel().getOfNum() + "</p>"
+                + "Ip adresse d'imprimante est : " + printjob.getPrinter().getIp() + "</p>"
+                + "Nombre d'étiquette est : " + printjob.getLabel().getLabelNumber() + "</p>"
+                + "Type d'étiquette(reference) est : " + printjob.getLabel().getLabelType().getReference() + "</p>";
         retourData.put("retourdata", data);
 
         return "success $post data to web service!";
@@ -268,82 +280,50 @@ public class GenericResource {
     }
     
     @GET
-    @Path("getOfList")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("labelof2/{numOf}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Of> getOF(@QueryParam("ref") long ref,
-                          @QueryParam("sref") String sref,
-                          @QueryParam("date_start") String date_start,
-                          @QueryParam("date_end") String date_end) throws SQLException{
+    public Of getOF(@PathParam("ofNum") long ofNum) throws SQLException{
         
         logger.info("get of list ! ");
-         
-        //System.out.println("date_start: " + date_start);//08/03/2016
-        String date1 = null;
-        String date2 = null;
-        String path_mysql = "?REFERENCE=" + ref ;
-        List<Of> return_list = new ArrayList<>();
+        Of of = new Of();
+        
         String uri = null;//"http://localhost:8080/OF_MVN/webresources/home/testJNDI";
         Map<String, String> filepath_catalogue = FilePathDatabase.getFilePathCatalogue();
         uri = filepath_catalogue.get("of_database");
         System.out.println("uri is :" + uri);
-
-        if(sref !=null && !sref.equals("")){
-            path_mysql = path_mysql + "&SREFERENCE1=" + sref;
-        }
-        
-        if(date_start!=null && !date_start.equals("") && date_end!=null && !date_end.equals("")){
-            date1 = "\"" + date_start.substring(6, 10)+'-'+date_start.substring(0,2)+'-'+date_start.substring(3,5)+" 00:00:00 "+"\"";
-            date2 = "\"" + date_end.substring(6, 10)+'-'+date_end.substring(0,2)+'-'+date_end.substring(3,5)+" 00:00:00 "+"\"";
-            path_mysql = path_mysql+ "&date_start=" + date1 +"&date_end=" + date2;
-        }
-                        
+          
         try {
             Client client = ClientBuilder.newClient( new ClientConfig().register( LoggingFilter.class ) );
-            WebTarget webTarget = client.target(uri+path_mysql);
+            WebTarget webTarget = client.target(uri + "/" + ofNum);
 
             Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get(Response.class);
-            return_list = response.readEntity(new GenericType<List<Of>>(){});      
+            of = response.readEntity(new GenericType<Of>(){});      
              
-            System.out.println("list size is :" + return_list.size());
+            System.out.println("ofNum is :" + of.getOfNum());
             
-            StringBuilder builder = new StringBuilder("=== Ofs ===\n");
-            for (Of of: return_list) {
-                builder.append("OfNum: ").append(of.getOfNum()).append(", ")
-                        .append("reference: ").append(of.getReference()).append("\n");          
-            }
-            builder.append("==================");
-            System.out.println(builder.toString());   
-                    
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        return return_list;
+        return of;
     }
     
     @GET
-    @Path("getOfList2")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("labelof/{numOf}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Of getOF2(@QueryParam("ofNum") long ofNum)throws SQLException{
+    public Of getOF2(@PathParam("numOf") String numOf)throws SQLException{
     
+        
         List<Of> list = new ArrayList<>();
         Of oo = new Of();
-        Date date1 = new Date();
-        SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-        try {
-            date1 = dateformat3.parse("15/10/2007 12:22:11");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Of of1 = new Of(1,"1ref","1sref","1art",1,1,date1);
-        Of of2 = new Of(2,"2ref","2sref","2art",2,2,date1);
-        Of of3 = new Of(3,"3ref","3sref","3art",3,3,date1);
-        Of of4 = new Of(4,"4ref","4sref","4art",4,4,date1);
+        Date date = new Date();
+        
+        Of of1 = new Of("1","1ref","1sref","1art",1,10,"indice1","refeCli1","eiterExterne1","sq",true,date);
+        Of of2 = new Of("2","2ref","2sref","2art",2,28,"indice2","refeCli2","eiterExterne2","sq",true,date);
+        Of of3 = new Of("3","3ref","3sref","3art",3,32,"indice3","refeCli3","eiterExterne3","sq",true,date);
+        Of of4 = new Of("4","4ref","4sref","4art",4,42,"indice4","refeCli4","eiterExterne4","sq",true,date);
         
         list.add(of1);
         list.add(of2);
@@ -351,11 +331,12 @@ public class GenericResource {
         list.add(of4);
         
         for(int i = 0; i <list.size() ; i++){
-            if(list.get(i).getOfNum()==ofNum){
+            if((list.get(i).getOfNum()).equals(numOf) ){
                 oo = list.get(i);
                 break;
             }
         }
+                
         return oo;
     }
 }

@@ -11,28 +11,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "of")
 @XmlAccessorType (XmlAccessType.FIELD)
 public class Of {
-    long ofNum;
+    
+    String ofNum;
     String reference;
     String sreference;
     String artDesignation;
     int nbArtPerContainer;
     int qteOfEntete;
-    Date datePlainfDebut;
+    String xIndiceEtiq;
+    String referenceCli;
+    String tiersExterne;
+    String sigleQualite;
+    boolean aqp; 
+    Date dateOf;
     
     public Of() {
     }
 
-    public Of(long ofNum, String reference, String sreference, String artDesignation, int nbArtPerContainer, int qteOfEntete, Date datePlainfDebut) {
+    public Of(String ofNum, String reference, String sreference, String artDesignation, int nbArtPerContainer, int qteOfEntete,String xIndiceEtiq, String referenceCli, String tiersExterne, String sigleQualite, boolean aqp, Date dateOf) {
         this.ofNum = ofNum;
         this.reference = reference;
         this.sreference = sreference;
         this.artDesignation = artDesignation;
         this.nbArtPerContainer = nbArtPerContainer;
         this.qteOfEntete = qteOfEntete;
-        this.datePlainfDebut = datePlainfDebut;
+        this.xIndiceEtiq = xIndiceEtiq;
+        this.referenceCli = referenceCli;
+        this.tiersExterne = tiersExterne;
+        this.sigleQualite = sigleQualite;
+        this.aqp = aqp;
+        this.dateOf = dateOf;
     }
 
-    public long getOfNum() {
+    public String getOfNum() {
         return ofNum;
     }
 
@@ -56,11 +67,31 @@ public class Of {
         return qteOfEntete;
     }
 
-    public Date getDatePlainfDebut() {
-        return datePlainfDebut;
+    public String getxIndiceEtiq() {
+        return xIndiceEtiq;
     }
 
-    public void setOfNum(long ofNum) {
+    public String getReferenceCli() {
+        return referenceCli;
+    }
+
+    public String getTiersExterne() {
+        return tiersExterne;
+    }
+
+    public String getSigleQualite() {
+        return sigleQualite;
+    }
+
+    public boolean isAqp() {
+        return aqp;
+    }
+
+    public Date getDateOf() {
+        return dateOf;
+    }
+
+    public void setOfNum(String ofNum) {
         this.ofNum = ofNum;
     }
 
@@ -84,8 +115,28 @@ public class Of {
         this.qteOfEntete = qteOfEntete;
     }
 
-    public void setDatePlainfDebut(Date datePlainfDebut) {
-        this.datePlainfDebut = datePlainfDebut;
+    public void setxIndiceEtiq(String xIndiceEtiq) {
+        this.xIndiceEtiq = xIndiceEtiq;
+    }
+
+    public void setReferenceCli(String referenceCli) {
+        this.referenceCli = referenceCli;
+    }
+
+    public void setTiersExterne(String tiersExterne) {
+        this.tiersExterne = tiersExterne;
+    }
+
+    public void setSigleQualite(String sigleQualite) {
+        this.sigleQualite = sigleQualite;
+    }
+
+    public void setAqp(boolean aqp) {
+        this.aqp = aqp;
+    }
+
+    public void setDateOf(Date dateOf) {
+        this.dateOf = dateOf;
     }
     
     
